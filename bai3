@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+struct Ngay { int d,m,y; };
+
+struct SinhVien{
+    char ma[10], ten[50];
+    Ngay ns;
+};
+
+struct Node{
+    SinhVien data;
+    Node *next;
+};
+
+bool trungNgay(Ngay a, Ngay b){
+    return a.d==b.d && a.m==b.m && a.y==b.y;
+}
+
+void inCungNgay(Node* head, Ngay x){
+    bool found = false;
+    while(head){
+        if(trungNgay(head->data.ns,x)){
+            cout<<head->data.ma<<" - "<<head->data.ten<<endl;
+            found = true;
+        }
+        head = head->next;
+    }
+    if(!found) cout<<"Khong tim thay\n";
+}
+
+int main(){
+    // demo nhanh
+    Node *head = NULL; // bạn tự thêm dữ liệu nếu cần
+
+    Ngay x;
+    cout<<"Nhap ngay: ";
+    cin>>x.d>>x.m>>x.y;
+
+    inCungNgay(head,x);
+}
