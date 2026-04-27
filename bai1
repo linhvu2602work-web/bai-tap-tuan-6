@@ -1,0 +1,55 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+struct Ngay { int d,m,y; };
+
+struct SinhVien {
+    char ma[10], ten[50];
+    Ngay ns;
+};
+
+struct Node {
+    SinhVien data;
+    Node *next;
+};
+
+Node* taoNode(SinhVien x){
+    Node* p = new Node;
+    p->data = x;
+    p->next = NULL;
+    return p;
+}
+
+void themCuoi(Node* &head, SinhVien x){
+    Node* p = taoNode(x);
+    if(!head){ head = p; return; }
+    Node* q = head;
+    while(q->next) q = q->next;
+    q->next = p;
+}
+
+void nhap(SinhVien &x){
+    cin.ignore();
+    cout<<"Ma: "; cin.getline(x.ma,10);
+    cout<<"Ten: "; cin.getline(x.ten,50);
+    cout<<"Ngay sinh: "; cin>>x.ns.d>>x.ns.m>>x.ns.y;
+}
+
+void xuat(Node* head){
+    while(head){
+        cout<<head->data.ma<<" - "<<head->data.ten<<endl;
+        head = head->next;
+    }
+}
+
+int main(){
+    Node* head = NULL;
+    int n; cin>>n;
+    for(int i=0;i<n;i++){
+        SinhVien x;
+        nhap(x);
+        themCuoi(head,x);
+    }
+    xuat(head);
+}
