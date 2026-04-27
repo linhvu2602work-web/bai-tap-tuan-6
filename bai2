@@ -1,0 +1,58 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+struct SinhVien{
+    char ma[10], ten[50];
+};
+
+struct Node{
+    SinhVien data;
+    Node *next;
+};
+
+Node* taoNode(SinhVien x){
+    Node* p = new Node;
+    p->data = x;
+    p->next = NULL;
+    return p;
+}
+
+void themTheoThuTu(Node* &head, SinhVien x){
+    Node* p = taoNode(x);
+
+    if(!head || strcmp(x.ma, head->data.ma) < 0){
+        p->next = head;
+        head = p;
+        return;
+    }
+
+    Node* q = head;
+    while(q->next && strcmp(q->next->data.ma, x.ma) < 0)
+        q = q->next;
+
+    p->next = q->next;
+    q->next = p;
+}
+
+void xuat(Node* head){
+    while(head){
+        cout<<head->data.ma<<" - "<<head->data.ten<<endl;
+        head = head->next;
+    }
+}
+
+int main(){
+    Node* head = NULL;
+    int n; cin>>n;
+
+    for(int i=0;i<n;i++){
+        SinhVien x;
+        cin.ignore();
+        cout<<"Ma: "; cin.getline(x.ma,10);
+        cout<<"Ten: "; cin.getline(x.ten,50);
+        themTheoThuTu(head,x);
+    }
+
+    xuat(head);
+}
